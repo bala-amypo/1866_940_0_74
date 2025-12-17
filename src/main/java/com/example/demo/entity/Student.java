@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 
 @Entity
@@ -46,13 +46,5 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
     }
 }
