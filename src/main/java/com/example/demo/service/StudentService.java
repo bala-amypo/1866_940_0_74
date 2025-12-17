@@ -1,8 +1,8 @@
-package com.example.demo.reository;
+package com.example.demo.servicey;
 
-import org.springframework.stereotype.service;
+import com.example.demo.entity.
 
 @service
 public interface StudentSevice{
-    
+
 }
