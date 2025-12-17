@@ -1,8 +1,10 @@
 package com.example.demo.servicey;
 
-import com.example.demo.entity.
+import com.example.demo.entity.Student;
 
-@service
+
 public interface StudentSevice{
+
+    Student saveStudent(Student student);
 
 }
