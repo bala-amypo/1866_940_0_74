@@ -1,31 +1,25 @@
-package com.example.demo.exception;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.http.ResponseEntity;
-
-import java.util.Map;
-import java.util.HashMap;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@RestControllerAdvice
-public class GlobalExceptionHandler{
+import java.util.List;
+import java.util.stream.Collectors;
 
-    @ExceptionHandler(ResourceNotFoundException.class) //runtime expection
-        public ResponseEntity<String> handleNotFound(ResourceNotFoundException ex){
-            return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
-        }
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,String>> handleMethod(MethodArgumentNotValidException mex){
+    public ResponseEntity<Object> handleMethod(MethodArgumentNotValidException ex) {
+        // Extracting validation errors
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         
-        Map<String,String> error=new HashMap<>();
+        // Creating a list of error messages from the field errors
+        List<String> errors = fieldErrors.stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.toList());
 
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
-        );
-
+        // Returning a response entity with the errors
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-
 }
