@@ -9,7 +9,7 @@ import com.example.demo.service.StudentService;
 import com.example.demo.exception.ResourceNotFoundException;
 
 @Service
-public class StudentServiceImple implements StudentService {
+public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
 
@@ -19,6 +19,6 @@ public class StudentServiceImple implements StudentService {
     
     public Student getStudentById(Long id){
         return studentRepository.findById(id)
-        .orElseThrow(()-> new ResourceNotFoundException("Student not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
     }
 }
